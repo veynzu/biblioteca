@@ -112,29 +112,12 @@ public class DigitalLibrary implements Serializable {
                 for (int i = 0; i < library.usuarios.size(); i++) {
                     User user = library.usuarios.get(i);
                     if (user != null) {
-                        // Aquí es donde debemos asegurarnos de que las listas internas de User no sean null.
-                        // Como User las inicializa en su constructor, este problema solo debería ocurrir
-                        // con datos serializados ANTES de que User tuviera esos campos.
-                        // Necesitamos una forma de inicializarlos si son null post-deserialización.
-                        // La forma más directa es añadir un método en User o hacerlo aquí si tenemos acceso
-                        // a los campos o a través de setters (que no tenemos para las listas directamente).
-
-                        // Solución: Llamar a los getters y si son null, instanciar una nueva lista
-                        // y asignarla. Esto requiere que User tenga setters para estas listas
-                        // o que modifiquemos User para que los getters los auto-inicien.
-                        // Vamos a modificar User para que tenga un método de "ensureFriendRequestListsInitialized"
-                        // o hacerlo directamente aquí si es simple.
-
-                        // Opción más simple aquí (asumiendo que User.java ya inicializa en constructor para NUEVOS User):
-                        // Si user.getSentFriendRequests() es null, esto es un User "antiguo".
-                        // Necesitamos crear las listas para él.
+             
                         user.initializeFriendRequestLists(); // Llamamos al método que hemos añadido a User
                     }
                 }
             }
-            // El problema es que la lista es null EN EL OBJETO USER. No en DigitalLibrary.
-            // La corrección principal debe estar en getFriendSuggestionsByBookCategory y en los getters de User, o User debe auto-repararse.
-            // Se corregirá en getFriendSuggestionsByBookCategory.
+
 
             return library;
         } catch (IOException | ClassNotFoundException e) {
@@ -216,15 +199,6 @@ public class DigitalLibrary implements Serializable {
             this.chatMessagesByRoom.putIfAbsent(room, new DoubleList<>());
         }
 
-        // Sincronizar this.chatRoomNames con finalRoomNames
-        // Primero, eliminar de this.chatRoomNames las que ya no están en finalRoomNames (excepto si hay mensajes)
-        // Esto es complejo, por ahora, simplemente reconstruimos this.chatRoomNames basado en lo que es visible.
-        // La forma más simple es que this.chatRoomNames sea la lista autoritativa de las salas que *deberían* existir.
-        // Y la GUI solo muestre estas.
-        // Dejemos la reconstrucción de this.chatRoomNames como estaba, ya que es la que se guarda.
-        // El método de la GUI llamará a este para obtener la *lista a mostrar*.
-        
-        // Reconstruir this.chatRoomNames para asegurar consistencia con lo que se muestra y persiste
         this.chatRoomNames.clear();
         for(int i=0; i < currentDisplayableRooms.size(); i++){
             this.chatRoomNames.addLast(currentDisplayableRooms.get(i));
@@ -1389,46 +1363,6 @@ public class DigitalLibrary implements Serializable {
                 }
             }
         }
-
-        // 2. Filtrar adicionalmente si es necesario (ej. solicitudes pendientes/aceptadas del sistema de amistad explícito)
-        // Por ahora, mantenemos la sugerencia basada puramente en la estructura del grafo de gustos.
-        // Si quisiéramos filtrar por FriendRequests (del sistema de amistad separado):
-        /*
-        DoubleList<User> finalSuggestions = new DoubleList<>();
-        for (int i = 0; i < candidates.size(); i++) {
-            User candidate = candidates.get(i);
-            boolean hasPendingOrAcceptedRequest = false;
-            // Revisar sentFriendRequests del currentUser hacia el candidate
-            for (int sr = 0; sr < currentUser.getSentFriendRequests().size(); sr++) {
-                FriendRequest sentReq = currentUser.getSentFriendRequests().get(sr);
-                if (sentReq.getReceiverUsername().equals(candidate.getUsername()) && 
-                    (sentReq.getStatus() == FriendRequestStatus.PENDING || sentReq.getStatus() == FriendRequestStatus.ACCEPTED)) {
-                    hasPendingOrAcceptedRequest = true;
-                    break;
-                }
-            }
-            if (hasPendingOrAcceptedRequest) continue;
-
-            // Revisar receivedFriendRequests del currentUser desde el candidate
-            for (int rr = 0; rr < currentUser.getReceivedFriendRequests().size(); rr++) {
-                FriendRequest recReq = currentUser.getReceivedFriendRequests().get(rr);
-                if (recReq.getSenderUsername().equals(candidate.getUsername()) && 
-                    (recReq.getStatus() == FriendRequestStatus.PENDING || recReq.getStatus() == FriendRequestStatus.ACCEPTED)) {
-                    hasPendingOrAcceptedRequest = true;
-                    break;
-                }
-            }
-            if (!hasPendingOrAcceptedRequest) {
-                finalSuggestions.addLast(candidate);
-            }
-        }
-        // Devolver 'count' sugerencias de finalSuggestions
-        for (int i = 0; i < finalSuggestions.size() && suggestions.size() < count; i++) {
-            suggestions.addLast(finalSuggestions.get(i));
-        }
-        */
-
-        // Devolver 'count' sugerencias de los candidatos (sin el filtro de FriendRequest por ahora)
         for (int i = 0; i < candidates.size() && suggestions.size() < count; i++) {
             suggestions.addLast(candidates.get(i));
         }

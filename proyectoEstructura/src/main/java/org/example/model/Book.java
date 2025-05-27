@@ -2,7 +2,6 @@ package org.example.model;
 
 import org.example.structures.doubleList.DoubleList; // Importar DoubleList
 import java.io.Serializable; // Importar Serializable
-// import co.edu.uniquindio.estructuradato.proyectofinal.structures.listasSimples.ListaPropia; // Se añadirá después
 
 public class Book implements Comparable <Book>, Serializable { // Implementar Serializable
     private static final long serialVersionUID = 1L; // Buena práctica
@@ -116,8 +115,7 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
         if (this.ejemplaresDisponibles < this.stockTotal) {
             this.ejemplaresDisponibles++;
         }
-        // Considerar si se debe lanzar una excepción si se intenta devolver más ejemplares de los que hay en stock total.
-        // Por ahora, simplemente no se incrementa más allá del stockTotal.
+
     }
     
     public boolean hayEjemplaresDisponibles() {
@@ -125,14 +123,12 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
     }
 
     public double getCalificacionPromedio() {
-        // Este método debería calcularse basado en la lista de ratings
-        // Por ahora lo dejo como está, pero necesitará lógica
+
         return calificacionPromedio;
     }
 
     public void setCalificacionPromedio(double calificacionPromedio) {
-        // Este setter podría ser privado o usarse con cuidado, ya que el promedio
-        // debería derivarse de los ratings individuales.
+
         this.calificacionPromedio = calificacionPromedio;
     }
 
@@ -151,22 +147,13 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
         }
     }
 
-    /**
-     * Recalcula la calificación promedio basada en la lista de ratings.
-     */
     public void recalculateCalificacionPromedio() {
         if (ratings.isEmpty()) {
             this.calificacionPromedio = 0.0;
             return;
         }
         double sum = 0;
-        // Se necesita una forma de iterar sobre DoubleList. Asumiré que se añadirá un iterador o un método get(index).
-        // Por ahora, este cálculo es un placeholder.
-        // Si DoubleList ya es iterable (implementa Iterable<T>), se podría hacer:
-        // for (Rating r : ratings) { sum += r.getPuntuacion(); }
-        // this.calificacionPromedio = sum / ratings.size();
-        
-        // Como DoubleList tiene get(index) y size():
+
         for (int i = 0; i < ratings.size(); i++) {
             sum += ratings.get(i).getPuntuacion();
         }

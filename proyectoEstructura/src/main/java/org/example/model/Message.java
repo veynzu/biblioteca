@@ -1,6 +1,5 @@
 package org.example.model;
 
-// import java.util.Date; // O usar String para simplicidad
 
 public class Message {
     private User remitente;

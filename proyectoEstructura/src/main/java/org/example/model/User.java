@@ -14,8 +14,6 @@ public class User extends Person implements Comparable <User>, Serializable {
     private TipoUsuario tipoUsuario;
     private DoubleList<Loan> historialPrestamos; // Usar DoubleList
     private DoubleList<Rating> librosValorados;  // Usar DoubleList
-    // private ListaPropia<Loan> historialPrestamos; // Se añadirá después
-    // private ListaPropia<Rating> librosValorados; // Se añadirá después
 
     // Nuevos campos para solicitudes de amistad
     private DoubleList<FriendRequest> sentFriendRequests;
@@ -39,8 +37,6 @@ public class User extends Person implements Comparable <User>, Serializable {
         this.librosValorados = new DoubleList<>();  // Inicializar
         this.sentFriendRequests = new DoubleList<>(); // Inicializar
         this.receivedFriendRequests = new DoubleList<>(); // Inicializar
-        // this.historialPrestamos = new ListaPropia<>(); // Se inicializará después
-        // this.librosValorados = new ListaPropia<>(); // Se inicializará después
     }
 
     public String getUsername() {

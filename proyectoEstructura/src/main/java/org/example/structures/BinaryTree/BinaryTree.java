@@ -17,8 +17,6 @@ public class BinaryTree<T extends Comparable<T>> {
 
     public void clear() {
         root = null;
-        // En un escenario con muchos nodos, se podría necesitar una limpieza más explícita
-        // para ayudar al GC, pero para una implementación básica esto es suficiente.
     }
 
     // Insertar un elemento
@@ -36,7 +34,6 @@ public class BinaryTree<T extends Comparable<T>> {
         } else if (data.compareTo(current.getData()) > 0) {
             current.setRight(insertRecursive(current.getRight(), data));
         } else {
-            // El valor ya existe, no se hace nada (o se podría manejar de otra forma)
             return current;
         }
         return current;

@@ -2,8 +2,6 @@ package org.example.model;
 
 import java.io.Serializable; // Importar Serializable
 
-// import java.util.Date; // O usar String para simplicidad
-
 public class Rating implements Serializable { // Implementar Serializable
     private static final long serialVersionUID = 1L; // Buena práctica
 

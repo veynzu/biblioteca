@@ -2,8 +2,6 @@ package org.example.model;
 
 import java.io.Serializable;
 
-// import java.util.Date; // O usar String para simplicidad, o java.time.LocalDate
-
 public class Loan implements Serializable {
     private static final long serialVersionUID = 1L;
 
