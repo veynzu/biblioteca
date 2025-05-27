@@ -60,13 +60,13 @@ public class Main {
         biblioteca.addBook(new Book("B011", "Fahrenheit 451", "Ray Bradbury", "Ciencia Ficción", 1953, 1));
         biblioteca.addBook(new Book("B012", "El Gran Gatsby", "F. Scott Fitzgerald", "Clásico Moderno", 1925, 1));
 
-        // Usuarios (sin cambios)
-        biblioteca.registerUser(new User("U001", "Ana", "Pérez", "ana@example.com", "anap", "pass123", TipoUsuario.LECTOR));
-        biblioteca.registerUser(new User("U002", "Luis", "Gómez", "luis@example.com", "luisg", "pass456", TipoUsuario.LECTOR));
-        biblioteca.registerUser(new User("U003", "Admin", "Principal", "admin@example.com", "admin", "adminpass", TipoUsuario.ADMINISTRADOR));
-        biblioteca.registerUser(new User("U004", "Carlos", "Ruiz", "carlos@example.com", "carlosr", "pass789", TipoUsuario.LECTOR));
+        // Usuarios con credenciales actualizadas
+        biblioteca.registerUser(new User("U001", "Ana", "Pérez", "ana@example.com", "user1", "123", TipoUsuario.LECTOR));
+        biblioteca.registerUser(new User("U002", "Luis", "Gómez", "luis@example.com", "user2", "123", TipoUsuario.LECTOR));
+        biblioteca.registerUser(new User("U003", "Admin", "Principal", "admin@example.com", "admin", "123", TipoUsuario.ADMINISTRADOR));
+        biblioteca.registerUser(new User("U004", "Carlos", "Ruiz", "carlos@example.com", "user3", "123", TipoUsuario.LECTOR));
         biblioteca.registerUser(new User("U005", "Elena", "Diaz", "elena@example.com", "elenad", "pass101", TipoUsuario.LECTOR));
-        System.out.println("Datos de ejemplo inicializados en la biblioteca.");
+        System.out.println("Datos de ejemplo inicializados en la biblioteca con credenciales actualizadas.");
     }
 
     private static void verCatalogo() {

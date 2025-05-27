@@ -3,6 +3,7 @@ package org.example.model;
 import org.example.model.enums.TipoUsuario;
 import org.example.structures.doubleList.DoubleList; // Importar DoubleList
 import java.io.Serializable; // Importar Serializable
+import org.example.model.FriendRequest; // Importar FriendRequest
 // import co.edu.uniquindio.estructuradato.proyectofinal.structures.listasSimples.ListaPropia; // Se añadirá después
 
 public class User extends Person implements Comparable <User>, Serializable {
@@ -16,10 +17,16 @@ public class User extends Person implements Comparable <User>, Serializable {
     // private ListaPropia<Loan> historialPrestamos; // Se añadirá después
     // private ListaPropia<Rating> librosValorados; // Se añadirá después
 
+    // Nuevos campos para solicitudes de amistad
+    private DoubleList<FriendRequest> sentFriendRequests;
+    private DoubleList<FriendRequest> receivedFriendRequests;
+
     public User() {
         super();
         this.historialPrestamos = new DoubleList<>(); // Inicializar
         this.librosValorados = new DoubleList<>();  // Inicializar
+        this.sentFriendRequests = new DoubleList<>(); // Inicializar
+        this.receivedFriendRequests = new DoubleList<>(); // Inicializar
     }
 
     public User(String idPersona, String nombre, String apellido, String email, 
@@ -30,6 +37,8 @@ public class User extends Person implements Comparable <User>, Serializable {
         this.tipoUsuario = tipoUsuario;
         this.historialPrestamos = new DoubleList<>(); // Inicializar
         this.librosValorados = new DoubleList<>();  // Inicializar
+        this.sentFriendRequests = new DoubleList<>(); // Inicializar
+        this.receivedFriendRequests = new DoubleList<>(); // Inicializar
         // this.historialPrestamos = new ListaPropia<>(); // Se inicializará después
         // this.librosValorados = new ListaPropia<>(); // Se inicializará después
     }
@@ -66,6 +75,15 @@ public class User extends Person implements Comparable <User>, Serializable {
         return librosValorados;
     }
 
+    // Getters para las nuevas listas de solicitudes de amistad
+    public DoubleList<FriendRequest> getSentFriendRequests() {
+        return sentFriendRequests;
+    }
+
+    public DoubleList<FriendRequest> getReceivedFriendRequests() {
+        return receivedFriendRequests;
+    }
+
     // Getters y setters para listas se añadirán después
 
     @Override
@@ -77,6 +95,8 @@ public class User extends Person implements Comparable <User>, Serializable {
                 ", tipoUsuario=" + tipoUsuario +
                 ", historialPrestamosCount=" + (historialPrestamos != null ? historialPrestamos.size() : 0) + // Mostrar conteo
                 ", librosValoradosCount=" + (librosValorados != null ? librosValorados.size() : 0) + // Mostrar conteo
+                ", sentFriendRequestsCount=" + (sentFriendRequests != null ? sentFriendRequests.size() : 0) + // Conteo
+                ", receivedFriendRequestsCount=" + (receivedFriendRequests != null ? receivedFriendRequests.size() : 0) + // Conteo
                 '}';
     }
 
@@ -97,5 +117,15 @@ public class User extends Person implements Comparable <User>, Serializable {
     @Override
     public int hashCode() {
         return username.hashCode();
+    }
+
+    // Método para asegurar que las listas de FriendRequest estén inicializadas
+    public void initializeFriendRequestLists() {
+        if (this.sentFriendRequests == null) {
+            this.sentFriendRequests = new DoubleList<>();
+        }
+        if (this.receivedFriendRequests == null) {
+            this.receivedFriendRequests = new DoubleList<>();
+        }
     }
 }

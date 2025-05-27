@@ -16,11 +16,13 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
     private int ejemplaresDisponibles; // Nuevo campo
     private double calificacionPromedio;
     private DoubleList<Rating> ratings; // Usar DoubleList
+    private boolean available; // Nuevo campo para disponibilidad
 
     public Book() {
         this.ratings = new DoubleList<>(); // Inicializar
         this.stockTotal = 0; // Valor por defecto
         this.ejemplaresDisponibles = 0; // Valor por defecto
+        this.available = true; // Por defecto, un libro nuevo es disponible
     }
 
     public Book(String id, String titulo, String autor, String categoria, int anioPublicacion, int stockInicial) {
@@ -33,6 +35,7 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
         this.ejemplaresDisponibles = stockInicial; // Al inicio, todos los ejemplares están disponibles
         this.calificacionPromedio = 0.0; // Inicializar, se calculará después
         this.ratings = new DoubleList<>(); // Inicializar
+        this.available = true; // Por defecto, un libro nuevo es disponible
     }
 
     public String getId() {
@@ -151,7 +154,7 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
     /**
      * Recalcula la calificación promedio basada en la lista de ratings.
      */
-    private void recalculateCalificacionPromedio() {
+    public void recalculateCalificacionPromedio() {
         if (ratings.isEmpty()) {
             this.calificacionPromedio = 0.0;
             return;
@@ -170,6 +173,15 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
         this.calificacionPromedio = sum / ratings.size();
     }
 
+    // Getter y Setter para 'available'
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -182,6 +194,7 @@ public class Book implements Comparable <Book>, Serializable { // Implementar Se
                 ", ejemplaresDisponibles=" + ejemplaresDisponibles +
                 ", calificacionPromedio=" + String.format("%.2f", calificacionPromedio) +
                 ", ratingsCount=" + (ratings != null ? ratings.size() : 0) +
+                ", available=" + available +
                 '}';
     }
 
